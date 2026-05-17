@@ -21,7 +21,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <Link href="/about" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
               <h3 className="text-xl font-semibold text-slate-950 mb-3">About Nexus</h3>
               <p className="text-slate-600">Discover who we are, our approach to digital design, and why clients trust us.</p>
@@ -33,6 +33,10 @@ export default function Home() {
             <Link href="/pricing" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
               <h3 className="text-xl font-semibold text-slate-950 mb-3">Pricing</h3>
               <p className="text-slate-600">Browse our transparent packages and find the right option for your business.</p>
+            </Link>
+            <Link href="/why-us" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-slate-950 mb-3">Why Us</h3>
+              <p className="text-slate-600">See why Nexus delivers stronger results than a generic Squarespace site.</p>
             </Link>
           </div>
         </div>

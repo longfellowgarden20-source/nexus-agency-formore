@@ -34,6 +34,9 @@ export function Navigation() {
             <Link href="/services" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               Services
             </Link>
+            <Link href="/why-us" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              Why Us
+            </Link>
             <Link href="/pricing" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               Pricing
             </Link>
@@ -78,6 +81,9 @@ export function Navigation() {
               </Link>
               <Link href="/services" className="block px-4 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors">
                 Services
+              </Link>
+              <Link href="/why-us" className="block px-4 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors">
+                Why Us
               </Link>
               <Link href="/pricing" className="block px-4 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors">
                 Pricing
