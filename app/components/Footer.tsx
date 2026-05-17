@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react'
 
 export function Footer() {
@@ -26,10 +27,10 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white text-sm mb-3 sm:mb-4">Services</h4>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Web Design</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Development</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Strategy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
             </ul>
           </div>
 
@@ -37,10 +38,10 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white text-sm mb-3 sm:mb-4">Company</h4>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>
 

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export function CTASection() {
@@ -13,13 +14,13 @@ export function CTASection() {
           Let's talk about your project and how we can help your business grow online.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2">
-          <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-accent rounded-lg font-medium hover:bg-blue-50 transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 text-sm sm:text-base">
+          <Link href="/contact" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-accent rounded-lg font-medium hover:bg-blue-50 transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 text-sm sm:text-base">
             Request a Proposal
             <ArrowRight className="w-4 h-4" />
-          </button>
-          <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all duration-200 text-sm sm:text-base">
-            View Case Studies
-          </button>
+          </Link>
+          <Link href="/services" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all duration-200 text-sm sm:text-base">
+            View Services
+          </Link>
         </div>
       </div>
     </section>
