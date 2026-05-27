@@ -5,14 +5,14 @@
 // Adapts automatically for mobile (smaller cards, same animation).
 
 const items = [
-  { id: '1', src: 'https://placehold.co/800x520/0f172a/4f6ef7?text=Apex+Studio', alt: 'Apex Studio' },
-  { id: '2', src: 'https://placehold.co/800x520/1e293b/a3e635?text=Bloom+Collective', alt: 'Bloom Collective' },
-  { id: '3', src: 'https://placehold.co/800x520/4f6ef7/ffffff?text=Nord+Agency', alt: 'Nord Agency' },
-  { id: '4', src: 'https://placehold.co/800x520/0f172a/f8fafc?text=Vanta+Labs', alt: 'Vanta Labs' },
-  { id: '5', src: 'https://placehold.co/800x520/1e1e2e/c084fc?text=Prism+Creative', alt: 'Prism Creative' },
-  { id: '6', src: 'https://placehold.co/800x520/052e16/4ade80?text=Greenleaf+Co', alt: 'Greenleaf Co' },
-  { id: '7', src: 'https://placehold.co/800x520/1c1917/fb923c?text=Ember+Digital', alt: 'Ember Digital' },
-  { id: '8', src: 'https://placehold.co/800x520/0c4a6e/38bdf8?text=Shoreline+Media', alt: 'Shoreline Media' },
+  { id: '1', src: 'https://placehold.co/800x520/0f172a/4f6ef7?text=Mike%27s+Plumbing', alt: "Mike's Plumbing" },
+  { id: '2', src: 'https://placehold.co/800x520/1e293b/f9a8d4?text=Luxe+Hair+Salon', alt: 'Luxe Hair Salon' },
+  { id: '3', src: 'https://placehold.co/800x520/1c1917/fb923c?text=Pro+Roofing+Co', alt: 'Pro Roofing Co' },
+  { id: '4', src: 'https://placehold.co/800x520/052e16/4ade80?text=Green+Lawn+Care', alt: 'Green Lawn Care' },
+  { id: '5', src: 'https://placehold.co/800x520/1e1e2e/c084fc?text=Bella+Nail+Studio', alt: 'Bella Nail Studio' },
+  { id: '6', src: 'https://placehold.co/800x520/0c4a6e/38bdf8?text=City+HVAC+Services', alt: 'City HVAC Services' },
+  { id: '7', src: 'https://placehold.co/800x520/4f6ef7/ffffff?text=Elite+Auto+Detailing', alt: 'Elite Auto Detailing' },
+  { id: '8', src: 'https://placehold.co/800x520/0f172a/fcd34d?text=Sunrise+Cleaning+Co', alt: 'Sunrise Cleaning Co' },
 ]
 
 export function ClientLogoConveyor() {
@@ -29,10 +29,13 @@ export function ClientLogoConveyor() {
   return (
     <section className="w-full py-14 bg-white border-t border-slate-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-accent font-semibold mb-2">Trusted By</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-accent font-semibold mb-2">Who We Work With</p>
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-950">
-          Brands we&apos;ve built for
+          Built for local service businesses
         </h2>
+        <p className="mt-3 text-slate-500 text-sm max-w-xl mx-auto">
+          Plumbers, salons, roofers, landscapers, cleaners — if you run a local service business, we build sites that get you found and get you booked.
+        </p>
       </div>
 
       <style>{`
