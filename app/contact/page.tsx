@@ -45,6 +45,14 @@ export default function ContactPage() {
                 />
               </label>
               <label className="block">
+                <span className="text-sm font-medium text-slate-800">Phone <span className="text-slate-400 font-normal">(optional)</span></span>
+                <input
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+                />
+              </label>
+              <label className="block">
                 <span className="text-sm font-medium text-slate-800">Message</span>
                 <textarea
                   rows={6}
