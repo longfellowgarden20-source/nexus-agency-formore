@@ -1,4 +1,12 @@
+import type { Metadata } from 'next'
 import { Navigation } from '../components/Navigation'
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Get in touch with Fast Websites. Tell us about your project and we will respond with a custom plan.',
+  alternates: { canonical: 'https://fastwebsites.agency/contact' },
+  robots: { index: true, follow: true },
+}
 import { Footer } from '../components/Footer'
 
 export default function ContactPage() {

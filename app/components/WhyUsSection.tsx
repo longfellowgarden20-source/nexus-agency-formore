@@ -4,7 +4,7 @@ export function WhyUsSection() {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-white">
       <div className="text-center mx-auto max-w-3xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-accent font-semibold mb-4">Why Choose Nexus</p>
+        <p className="text-sm uppercase tracking-[0.3em] text-accent font-semibold mb-4">Why Choose Fast Websites</p>
         <h1 className="text-4xl sm:text-5xl font-display font-bold text-slate-950 mb-6">
           Better than a template platform like Squarespace
         </h1>
@@ -45,7 +45,7 @@ export function WhyUsSection() {
 
       <div className="mt-16 text-center">
         <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
-          When you choose Nexus, you get a website designed to grow with your business—not just a polished landing page. That means higher conversions, better flexibility, and a stronger digital foundation.
+          When you choose Fast Websites, you get a website designed to grow with your business—not just a polished landing page. That means higher conversions, better flexibility, and a stronger digital foundation.
         </p>
       </div>
     </section>

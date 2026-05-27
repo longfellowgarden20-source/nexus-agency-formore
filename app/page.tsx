@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navigation } from './components/Navigation'
+
+export const metadata: Metadata = {
+  title: 'Fast Websites — Award-Winning Web Agency',
+  description: 'We build beautiful, high-performance websites that drive results. Digital design & development for ambitious brands.',
+  alternates: { canonical: 'https://fastwebsites.agency' },
+}
 import { HeroSection } from './components/HeroSection'
 import { Footer } from './components/Footer'
 
@@ -12,7 +19,7 @@ export default function Home() {
       <section className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm uppercase tracking-[0.3em] text-accent font-semibold mb-4">Explore Nexus</p>
+            <p className="text-sm uppercase tracking-[0.3em] text-accent font-semibold mb-4">Explore Fast Websites</p>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-950">
               Choose the page that matches your next step.
             </h2>
@@ -23,7 +30,7 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <Link href="/about" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
-              <h3 className="text-xl font-semibold text-slate-950 mb-3">About Nexus</h3>
+              <h3 className="text-xl font-semibold text-slate-950 mb-3">About Fast Websites</h3>
               <p className="text-slate-600">Discover who we are, our approach to digital design, and why clients trust us.</p>
             </Link>
             <Link href="/services" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
@@ -36,7 +43,7 @@ export default function Home() {
             </Link>
             <Link href="/why-us" className="group block rounded-3xl border border-slate-200 bg-white p-8 hover:border-accent/50 hover:shadow-xl transition">
               <h3 className="text-xl font-semibold text-slate-950 mb-3">Why Us</h3>
-              <p className="text-slate-600">See why Nexus delivers stronger results than a generic Squarespace site.</p>
+              <p className="text-slate-600">See why Fast Websites delivers stronger results than a generic Squarespace site.</p>
             </Link>
           </div>
         </div>

@@ -18,7 +18,7 @@ export function Navigation() {
                 ✦
               </div>
               <span className="hidden sm:inline font-display text-xl font-bold text-slate-900">
-                Nexus
+                Fast Websites
               </span>
             </Link>
           </div>

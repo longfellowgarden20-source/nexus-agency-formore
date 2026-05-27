@@ -16,7 +16,7 @@ export function Footer() {
               <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">
                 ✦
               </div>
-              <span className="font-display text-white font-bold">Nexus</span>
+              <span className="font-display text-white font-bold">Fast Websites</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500">
               Award-winning web design & development for ambitious brands.
