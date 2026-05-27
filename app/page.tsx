@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://fastwebsites.agency' },
 }
 import { HeroSection } from './components/HeroSection'
+import { ClientLogoConveyor } from './components/ClientLogoConveyor'
 import { Footer } from './components/Footer'
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Navigation />
       <HeroSection />
+      <ClientLogoConveyor />
 
       <section className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
