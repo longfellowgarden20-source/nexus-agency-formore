@@ -12,7 +12,7 @@ import { Footer } from '../components/Footer'
 
 export default function WhyUsPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-base">
       <Navigation />
       <WhyUsSection />
       <CTASection />
