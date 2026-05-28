@@ -19,7 +19,7 @@ type Project = {
 }
 type Invoice = {
   id: string; client_name: string; client_email: string | null; amount: number
-  paid: boolean; due_date: string | null; notes: string | null
+  paid: boolean; due_date: string | null; notes: string | null; payment_link: string | null
 }
 type Stats = {
   clientStats: Client[]; totalRevenue: number; unpaidRevenue: number
@@ -79,20 +79,25 @@ export default function AdminPage() {
 
   // Invoice form
   const [showInvoiceForm, setShowInvoiceForm] = useState(false)
-  const [invoiceForm, setInvoiceForm] = useState({ client_name: '', client_email: '', amount: '', due_date: '', notes: '' })
+  const [invoiceForm, setInvoiceForm] = useState({ client_name: '', client_email: '', amount: '', due_date: '', notes: '', payment_link: '' })
+
+  // Previews
+  const [previews, setPreviews] = useState<{ id: string; business_name: string; created_at: string; viewed: boolean; view_count: number | null; primary_color: string }[]>([])
 
   const loadAll = useCallback(async () => {
     setLoading(true)
-    const [statsRes, convsRes, projectsRes, invoicesRes] = await Promise.all([
+    const [statsRes, convsRes, projectsRes, invoicesRes, previewsRes] = await Promise.all([
       fetch('/api/admin/stats').then(r => r.ok ? r.json() : null),
       fetch('/api/admin/conversations').then(r => r.ok ? r.json() : []),
       fetch('/api/admin/projects').then(r => r.ok ? r.json() : []),
       fetch('/api/admin/invoices').then(r => r.ok ? r.json() : []),
+      fetch('/api/admin/previews').then(r => r.ok ? r.json() : []),
     ])
     if (statsRes) { setStats(statsRes); setClients(statsRes.clientStats ?? []) }
     setConversations(Array.isArray(convsRes) ? convsRes : [])
     setProjects(Array.isArray(projectsRes) ? projectsRes : [])
     setInvoices(Array.isArray(invoicesRes) ? invoicesRes : [])
+    setPreviews(Array.isArray(previewsRes) ? previewsRes : [])
     setLoading(false)
   }, [])
 
@@ -130,7 +135,7 @@ export default function AdminPage() {
   const saveInvoice = async () => {
     const body = { ...invoiceForm, amount: parseFloat(invoiceForm.amount) }
     const res = await fetch('/api/admin/invoices', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-    if (res.ok) { const data = await res.json(); setInvoices(i => [data, ...i]); setShowInvoiceForm(false); setInvoiceForm({ client_name: '', client_email: '', amount: '', due_date: '', notes: '' }) }
+    if (res.ok) { const data = await res.json(); setInvoices(i => [data, ...i]); setShowInvoiceForm(false); setInvoiceForm({ client_name: '', client_email: '', amount: '', due_date: '', notes: '', payment_link: '' }) }
   }
 
   if (!authed) return <LoginScreen onLogin={() => { setAuthed(true); loadAll() }} />
@@ -269,6 +274,41 @@ export default function AdminPage() {
           </div>
         )}
 
+        {/* ── Preview history ── */}
+        {!loading && tab === 'clients' && previews.length > 0 && (
+          <div className={`${card} overflow-hidden`}>
+            <div className="px-5 py-3 border-b border-white/10">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Preview Pitches Sent</p>
+            </div>
+            <table className="w-full text-sm">
+              <thead><tr className="border-b border-white/10">
+                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Business</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Sent</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Views</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
+                <th className="px-5 py-3 w-16"></th>
+              </tr></thead>
+              <tbody className="divide-y divide-white/5">
+                {previews.map(p => (
+                  <tr key={p.id} className="hover:bg-white/3" style={{ transition: 'background 0.1s' }}>
+                    <td className="px-5 py-3 font-medium text-white">{p.business_name}</td>
+                    <td className="px-5 py-3 text-xs text-slate-400">{new Date(p.created_at).toLocaleDateString()}</td>
+                    <td className="px-5 py-3">
+                      <span className={`text-sm font-bold tabular-nums ${(p.view_count ?? 0) > 0 ? 'text-green-400' : 'text-slate-600'}`}>{p.view_count ?? 0}</span>
+                    </td>
+                    <td className="px-5 py-3">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${p.viewed ? 'bg-green-500/15 text-green-400' : 'bg-slate-500/15 text-slate-500'}`}>{p.viewed ? 'Opened' : 'Not viewed'}</span>
+                    </td>
+                    <td className="px-5 py-3">
+                      <a href={`/preview/${p.id}`} target="_blank" rel="noopener noreferrer" className="p-1.5 text-slate-400 hover:text-[#0ea5e9] border border-white/10 rounded-lg inline-flex" title="View preview"><ExternalLink className="w-3.5 h-3.5" /></a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
         {/* ── Conversations ── */}
         {!loading && tab === 'conversations' && (
           <div className="flex flex-col gap-4">
@@ -384,6 +424,7 @@ export default function AdminPage() {
                   <div><label className={labelCls}>Amount ($)</label><input type="number" value={invoiceForm.amount} onChange={e => setInvoiceForm(f => ({ ...f, amount: e.target.value }))} className={inputCls} style={{ background: '#0a0f1a' }} /></div>
                   <div><label className={labelCls}>Due Date</label><input type="date" value={invoiceForm.due_date} onChange={e => setInvoiceForm(f => ({ ...f, due_date: e.target.value }))} className={inputCls} style={{ background: '#0a0f1a' }} /></div>
                   <div className="col-span-2"><label className={labelCls}>Notes</label><input value={invoiceForm.notes} onChange={e => setInvoiceForm(f => ({ ...f, notes: e.target.value }))} className={inputCls} style={{ background: '#0a0f1a' }} /></div>
+                  <div className="col-span-2"><label className={labelCls}>Payment Link (Stripe / PayPal URL)</label><input value={invoiceForm.payment_link} onChange={e => setInvoiceForm(f => ({ ...f, payment_link: e.target.value }))} placeholder="https://buy.stripe.com/..." className={inputCls} style={{ background: '#0a0f1a' }} /></div>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={saveInvoice} className="px-4 py-2 text-sm font-bold text-black rounded-lg" style={{ background: '#0ea5e9' }}>Save</button>
@@ -413,9 +454,16 @@ export default function AdminPage() {
                         </span>
                       </td>
                       <td className="px-5 py-3">
-                        <button onClick={() => markInvoicePaid(i.id, !i.paid)} className={`p-1.5 rounded-lg border border-white/10 ${i.paid ? 'text-green-400 hover:text-slate-400' : 'text-slate-400 hover:text-green-400'}`} style={{ transition: 'color 0.15s' }} title={i.paid ? 'Mark unpaid' : 'Mark paid'}>
-                          {i.paid ? <X className="w-3.5 h-3.5" /> : <Check className="w-3.5 h-3.5" />}
-                        </button>
+                        <div className="flex items-center gap-2">
+                          {i.payment_link && !i.paid && (
+                            <a href={i.payment_link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#0ea5e9] border border-[#0ea5e9]/30 rounded-lg hover:bg-[#0ea5e9]/10" style={{ transition: 'background 0.15s' }} title="Open payment link">
+                              Pay <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                          <button onClick={() => markInvoicePaid(i.id, !i.paid)} className={`p-1.5 rounded-lg border border-white/10 ${i.paid ? 'text-green-400 hover:text-slate-400' : 'text-slate-400 hover:text-green-400'}`} style={{ transition: 'color 0.15s' }} title={i.paid ? 'Mark unpaid' : 'Mark paid'}>
+                            {i.paid ? <X className="w-3.5 h-3.5" /> : <Check className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
