@@ -200,9 +200,10 @@ export default async function PreviewPage({
           img { display: block; max-width: 100%; }
 
           /* Demo banner */
-          .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-          .demo-banner-text { font-size: 13px; color: #94a3b8; }
+          .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+          .demo-banner-text { font-size: 12px; color: #94a3b8; flex: 1; min-width: 0; }
           .demo-banner-text strong { color: #f1f5f9; }
+          @media (max-width: 500px) { .demo-banner-text .hide-mobile { display: none; } }
           .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
 
           /* Search demand bar */
@@ -214,6 +215,18 @@ export default async function PreviewPage({
           /* Push content below fixed demo banner */
           body { padding-top: 44px; }
           @media (max-width: 600px) { body { padding-top: 80px; } }
+
+          /* Mobile global overrides */
+          @media (max-width: 640px) {
+            .section { padding: 56px 16px; }
+            .hero-inner { padding: 56px 16px; gap: 32px; }
+            .hero-sub { font-size: 16px; }
+            .demand-bar { flex-direction: column; gap: 8px; padding: 10px 16px; text-align: center; }
+            .compare-inner { padding: 48px 16px; }
+            .nav-inner { padding: 0 16px; }
+            .cta-inner { padding: 56px 16px; }
+            .booking-slots { grid-template-columns: repeat(2, 1fr); }
+          }
 
           /* Nav */
           .nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e2e8f0; }
@@ -478,7 +491,7 @@ export default async function PreviewPage({
         {/* ── Demo banner ──────────────────────────────────── */}
         <div className="demo-banner">
           <p className="demo-banner-text">
-            👋 <strong>{greeting}, {cfg.name}</strong> — we built this site specifically for you. <strong>{competitorCount} competitors</strong> in {cfg.serviceArea.city} already have websites.
+            👋 <strong>{cfg.name}</strong><span className="hide-mobile"> — we built this for you. <strong>{competitorCount} competitors</strong> in {cfg.serviceArea.city} have websites.</span>
           </p>
           <a href={`mailto:${agencyEmail}?subject=I want this website for ${cfg.name}&body=Hi, I just viewed my website preview and I'm interested in getting started.`} className="demo-banner-cta">
             Claim This Site →
@@ -1122,8 +1135,8 @@ export default async function PreviewPage({
         </section>
 
         {/* ── AI Chat callout ──────────────────────────────── */}
-        <div style={{ background: '#0f172a', borderTop: '1px solid #1e293b', padding: '48px 24px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+        <div style={{ background: '#0f172a', borderTop: '1px solid #1e293b', padding: 'clamp(32px,5vw,48px) clamp(16px,4vw,24px)' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 40, alignItems: 'center' }}>
             <div>
               <p style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: c.accent, marginBottom: 12 }}>Included With Every Site</p>
               <h2 style={{ fontSize: 'clamp(22px,3vw,32px)', fontWeight: 900, color: '#fff', lineHeight: 1.2, marginBottom: 14 }}>
