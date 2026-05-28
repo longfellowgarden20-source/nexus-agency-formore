@@ -314,7 +314,6 @@ export default async function PreviewPage({ params, searchParams }: { params: Pr
           &nbsp;&nbsp;|&nbsp;&nbsp;
           <span style={{ color: '#475569' }}>Website by </span>
           <a href="https://fastwebsitesagency.com" style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: 600 }}>Fast Websites</a>
-        </span>
         </p>
       </footer>
 
