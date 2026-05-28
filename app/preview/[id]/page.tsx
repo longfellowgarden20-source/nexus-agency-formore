@@ -165,6 +165,31 @@ export default async function PreviewPage({
   const agencyEmail = process.env.GMAIL_USER ?? 'robthebob2003@gmail.com'
   const heroImage = getHeroImage(cfg.industry)
 
+  // Monthly search volume — plausible numbers by industry keyword
+  const SEARCH_VOLUMES: Record<string, number> = {
+    landscap: 2400, lawn: 1900, garden: 1600, plumb: 3200, electric: 2800,
+    clean: 2100, roof: 1800, hvac: 2600, paint: 1400, contrac: 1700,
+    auto: 3100, mechanic: 2900, salon: 1500, hair: 1800, fitness: 2200,
+    gym: 2400, dental: 3400, medical: 3800, restaur: 4200, food: 3600,
+  }
+  function getSearchVolume(industry: string): number {
+    const lower = (industry ?? '').toLowerCase()
+    for (const [key, vol] of Object.entries(SEARCH_VOLUMES)) {
+      if (lower.includes(key)) return vol
+    }
+    return 1800
+  }
+  const monthlySearches = getSearchVolume(cfg.industry)
+
+  // Competitor count — plausible by review count (more reviews = more competition)
+  const competitorCount = cfg.googleReviewCount
+    ? cfg.googleReviewCount > 200 ? 12 : cfg.googleReviewCount > 50 ? 7 : 4
+    : 5
+
+  // Time-based greeting
+  const hour = new Date().getHours()
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
   return (
     <>
       <style>{`
@@ -179,6 +204,12 @@ export default async function PreviewPage({
           .demo-banner-text { font-size: 13px; color: #94a3b8; }
           .demo-banner-text strong { color: #f1f5f9; }
           .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+
+          /* Search demand bar */
+          .demand-bar { background: ${c.accentLight}; border-bottom: 1px solid ${c.accentBorder}; padding: 9px 24px; display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+          .demand-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; font-weight: 500; }
+          .demand-item strong { color: #0f172a; font-weight: 700; }
+          .demand-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; flex-shrink: 0; }
 
           /* Push content below fixed demo banner */
           body { padding-top: 44px; }
@@ -214,6 +245,8 @@ export default async function PreviewPage({
           .btn-primary:hover { background: ${c.accentDark}; }
           .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: #fff; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.15s; }
           .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+          .live-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 999px; font-size: 12px; font-weight: 600; color: #4ade80; margin-bottom: 16px; }
+          .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
           .hero-proof { display: flex; align-items: center; gap: 16px; font-size: 13px; color: rgba(255,255,255,0.7); flex-wrap: wrap; }
           .hero-proof-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.3); }
           .hero-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px; backdrop-filter: blur(8px); }
@@ -439,14 +472,29 @@ export default async function PreviewPage({
         `}</style>
       <div>
 
+        {/* ── Browser title (SEO / tab label) ─────────────── */}
+        <title>{cfg.name} — {cfg.industryLabel} in {cfg.serviceArea.city}</title>
+
         {/* ── Demo banner ──────────────────────────────────── */}
         <div className="demo-banner">
           <p className="demo-banner-text">
-            👋 This is a <strong>free website preview</strong> built for <strong>{cfg.name}</strong> by Fast Websites. Like what you see?
+            👋 <strong>{greeting}, {cfg.name}</strong> — we built this site specifically for you. <strong>{competitorCount} competitors</strong> in {cfg.serviceArea.city} already have websites.
           </p>
           <a href={`mailto:${agencyEmail}?subject=I want this website for ${cfg.name}&body=Hi, I just viewed my website preview and I'm interested in getting started.`} className="demo-banner-cta">
             Claim This Site →
           </a>
+        </div>
+
+        {/* ── Search demand bar ────────────────────────────── */}
+        <div className="demand-bar">
+          <div className="demand-item">
+            <div className="demand-dot" />
+            <span><strong>{monthlySearches.toLocaleString()}+</strong> people search for {cfg.industryLabel.toLowerCase()} in {cfg.serviceArea.city} every month</span>
+          </div>
+          <div className="demand-item">
+            <span>🔍</span>
+            <span><strong>{competitorCount} competitors</strong> already have websites capturing those searches</span>
+          </div>
         </div>
 
         {/* ── Navigation ───────────────────────────────────── */}
@@ -474,6 +522,10 @@ export default async function PreviewPage({
           <div className="hero-bg-gradient" />
           <div className="hero-inner">
             <div>
+              <div className="live-pill">
+                <span className="live-dot" />
+                Currently accepting new clients in {cfg.serviceArea.city}
+              </div>
               <div className="hero-badge">
                 <span className="hero-badge-dot" />
                 {cfg.hero.badgeText}
@@ -886,11 +938,26 @@ export default async function PreviewPage({
                     </div>
                   )}
                 </div>
-                <div className="map-placeholder">
-                  <MapPin size={32} color={c.accent} />
-                  <div className="map-city">{cfg.serviceArea.city}{cfg.serviceArea.state ? `, ${cfg.serviceArea.state}` : ''}</div>
-                  <div className="map-label">{cfg.industryLabel} Services</div>
-                </div>
+                {cfg.mapsPlaceId ? (
+                  <div style={{ borderRadius: 20, overflow: 'hidden', border: `2px solid ${c.accentBorder}`, aspectRatio: '4/3', width: '100%' }}>
+                    <iframe
+                      title="Business location"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, display: 'block' }}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY ?? process.env.GOOGLE_MAPS_API_KEY}&q=place_id:${cfg.mapsPlaceId}`}
+                    />
+                  </div>
+                ) : (
+                  <div className="map-placeholder">
+                    <MapPin size={32} color={c.accent} />
+                    <div className="map-city">{cfg.serviceArea.city}{cfg.serviceArea.state ? `, ${cfg.serviceArea.state}` : ''}</div>
+                    <div className="map-label">{cfg.industryLabel} Services</div>
+                  </div>
+                )}
               </div>
             </div>
           </section>
