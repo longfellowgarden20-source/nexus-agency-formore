@@ -1,7 +1,42 @@
 import { notFound } from 'next/navigation'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { transporter } from '@/lib/mailer'
-import { Phone, Mail, MapPin, CheckCircle, ArrowRight, Zap, Star, ChevronDown } from 'lucide-react'
+import { Phone, Mail, MapPin, CheckCircle, ArrowRight, Zap, Star, ChevronDown, Shield, Award, Clock, Calendar, Users } from 'lucide-react'
+
+// Unsplash hero images by industry keyword
+const HERO_IMAGES: Record<string, string> = {
+  landscap: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  lawn:     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  garden:   'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80&auto=format&fit=crop',
+  plumb:    'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1600&q=80&auto=format&fit=crop',
+  electric: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1600&q=80&auto=format&fit=crop',
+  clean:    'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80&auto=format&fit=crop',
+  roof:     'https://images.unsplash.com/photo-1632759145354-ac2e0ebe3d41?w=1600&q=80&auto=format&fit=crop',
+  hvac:     'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=80&auto=format&fit=crop',
+  paint:    'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1600&q=80&auto=format&fit=crop',
+  contrac:  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  auto:     'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
+  mechanic: 'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
+  salon:    'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80&auto=format&fit=crop',
+  hair:     'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80&auto=format&fit=crop',
+  fitness:  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
+  gym:      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
+  dental:   'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1600&q=80&auto=format&fit=crop',
+  medical:  'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1600&q=80&auto=format&fit=crop',
+  restaur:  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80&auto=format&fit=crop',
+  food:     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80&auto=format&fit=crop',
+}
+
+function getHeroImage(industry: string): string {
+  const lower = (industry ?? '').toLowerCase()
+  for (const [key, url] of Object.entries(HERO_IMAGES)) {
+    if (lower.includes(key)) return url
+  }
+  return 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80&auto=format&fit=crop'
+}
+
+// Time slots for booking widget
+const TIME_SLOTS = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM']
 
 export const dynamic = 'force-dynamic'
 
@@ -125,6 +160,7 @@ export default async function PreviewPage({
 
   const c = cfg.colors
   const agencyEmail = process.env.GMAIL_USER ?? 'robthebob2003@gmail.com'
+  const heroImage = getHeroImage(cfg.industry)
 
   return (
     <>
@@ -159,8 +195,10 @@ export default async function PreviewPage({
           @media (max-width: 768px) { .nav-links { display: none; } }
 
           /* Hero */
-          .hero { position: relative; min-height: 680px; display: flex; align-items: center; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); overflow: hidden; }
-          .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(135deg, ${c.accent}22 0%, transparent 60%); }
+          .hero { position: relative; min-height: 680px; display: flex; align-items: center; overflow: hidden; }
+          .hero-bg-img { position: absolute; inset: 0; background-image: url('${heroImage}'); background-size: cover; background-position: center; }
+          .hero-bg-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.3) 100%); }
+          .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(135deg, ${c.accent}33 0%, transparent 50%); }
           .hero-inner { position: relative; max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
           .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 500; margin-bottom: 24px; }
           .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
@@ -317,6 +355,47 @@ export default async function PreviewPage({
           @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
           @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
+          /* Stats bar */
+          .stats-bar { background: ${c.accent}; padding: 20px 24px; }
+          .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .stat-item { text-align: center; }
+          .stat-value { font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #fff; letter-spacing: -0.02em; }
+          .stat-label { font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 500; margin-top: 2px; }
+          @media (max-width: 640px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+
+          /* Trust badges */
+          .trust-bar { background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 20px 24px; }
+          .trust-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
+          .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; }
+          .trust-badge-icon { width: 32px; height: 32px; border-radius: 8px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+          /* Process / How it works */
+          .process-bg { background: #fff; border-top: 1px solid #e2e8f0; }
+          .process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; position: relative; }
+          .process-steps::before { content: ''; position: absolute; top: 28px; left: calc(16.67% + 16px); right: calc(16.67% + 16px); height: 2px; background: ${c.accentBorder}; z-index: 0; }
+          .process-step { text-align: center; position: relative; z-index: 1; }
+          .process-num { width: 56px; height: 56px; border-radius: 50%; background: ${c.accent}; color: #fff; font-size: 20px; font-weight: 900; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 0 8px ${c.accentLight}; }
+          .process-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+          .process-desc { font-size: 14px; color: #64748b; line-height: 1.6; }
+          @media (max-width: 640px) { .process-steps { grid-template-columns: 1fr; } .process-steps::before { display: none; } }
+
+          /* Booking widget */
+          .booking-bg { background: ${c.accentLight}; border-top: 1px solid ${c.accentBorder}; }
+          .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+          .booking-form { background: #fff; border-radius: 20px; padding: 32px; box-shadow: 0 8px 40px -8px rgba(0,0,0,0.1); border: 1px solid ${c.accentBorder}; }
+          .booking-form-title { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+          .booking-form-sub { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+          .booking-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+          .time-slot { padding: 8px 4px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-weight: 600; color: #475569; text-align: center; cursor: pointer; transition: all 0.15s; background: #fff; }
+          .time-slot:hover { border-color: ${c.accent}; color: ${c.accent}; background: ${c.accentLight}; }
+          .time-slot.selected { border-color: ${c.accent}; background: ${c.accent}; color: #fff; }
+          .booking-info { padding: 32px 0; }
+          .booking-feature { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+          .booking-feature-icon { width: 44px; height: 44px; border-radius: 12px; background: ${c.accent}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+          .booking-feature-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+          .booking-feature-desc { font-size: 13px; color: #64748b; line-height: 1.5; }
+          @media (max-width: 768px) { .booking-grid { grid-template-columns: 1fr; } }
+
           /* Powered by badge */
           .powered-badge { position: fixed; bottom: 20px; left: 20px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
           .powered-badge span { font-size: 12px; font-weight: 700; color: #fff; }
@@ -353,6 +432,8 @@ export default async function PreviewPage({
 
         {/* ── Hero ─────────────────────────────────────────── */}
         <section className="hero">
+          <div className="hero-bg-img" />
+          <div className="hero-bg-overlay" />
           <div className="hero-bg-gradient" />
           <div className="hero-inner">
             <div>
@@ -408,6 +489,54 @@ export default async function PreviewPage({
           </div>
         </section>
 
+        {/* ── Stats bar ────────────────────────────────────── */}
+        <div className="stats-bar">
+          <div className="stats-inner">
+            <div className="stat-item">
+              <div className="stat-value">500+</div>
+              <div className="stat-label">Jobs Completed</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">4.9★</div>
+              <div className="stat-label">Average Rating</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">15+</div>
+              <div className="stat-label">Years Experience</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">100%</div>
+              <div className="stat-label">Satisfaction Guarantee</div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Trust badges ─────────────────────────────────── */}
+        <div className="trust-bar">
+          <div className="trust-inner">
+            <div className="trust-badge">
+              <div className="trust-badge-icon"><Shield size={16} color={c.accent} /></div>
+              Licensed &amp; Insured
+            </div>
+            <div className="trust-badge">
+              <div className="trust-badge-icon"><Award size={16} color={c.accent} /></div>
+              BBB Accredited
+            </div>
+            <div className="trust-badge">
+              <div className="trust-badge-icon"><Star size={16} color={c.accent} /></div>
+              Google Guaranteed
+            </div>
+            <div className="trust-badge">
+              <div className="trust-badge-icon"><Users size={16} color={c.accent} /></div>
+              Local Business
+            </div>
+            <div className="trust-badge">
+              <div className="trust-badge-icon"><Clock size={16} color={c.accent} /></div>
+              Same-Day Response
+            </div>
+          </div>
+        </div>
+
         {/* ── Services ─────────────────────────────────────── */}
         {cfg.services.length > 0 && (
           <section id="services" className="section services-bg">
@@ -453,6 +582,34 @@ export default async function PreviewPage({
             </div>
           </section>
         )}
+
+        {/* ── How it works ─────────────────────────────────── */}
+        <section className="section process-bg">
+          <div className="section-inner">
+            <div className="section-center">
+              <p className="section-label">Our Process</p>
+              <h2 className="section-h2">How it works</h2>
+              <p className="section-intro">Getting started is simple — we handle everything from start to finish.</p>
+            </div>
+            <div className="process-steps">
+              <div className="process-step">
+                <div className="process-num">1</div>
+                <div className="process-title">Request a Quote</div>
+                <p className="process-desc">Fill out our quick form or give us a call. We&apos;ll get back to you within 1 business day with a free, no-obligation estimate.</p>
+              </div>
+              <div className="process-step">
+                <div className="process-num">2</div>
+                <div className="process-title">We Assess &amp; Plan</div>
+                <p className="process-desc">Our {cfg.proNounSingular} visits your property, reviews the scope, and puts together a clear plan with timeline and pricing.</p>
+              </div>
+              <div className="process-step">
+                <div className="process-num">3</div>
+                <div className="process-title">Work Begins</div>
+                <p className="process-desc">We show up on time, do the job right, and don&apos;t leave until you&apos;re 100% satisfied. Cleanup is always included.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ── Pricing ──────────────────────────────────────── */}
         {cfg.pricing.plans.length > 0 && (
@@ -570,6 +727,71 @@ export default async function PreviewPage({
             </div>
           </section>
         )}
+
+        {/* ── Booking widget ───────────────────────────────── */}
+        <section className="section booking-bg">
+          <div className="section-inner">
+            <div className="booking-grid">
+              <div className="booking-form">
+                <div className="booking-form-title">Book an Appointment</div>
+                <div className="booking-form-sub">Select a date and time that works for you — we&apos;ll confirm within 2 hours.</div>
+                <div className="form-group">
+                  <label className="form-label">Service</label>
+                  <select className="form-input">
+                    <option value="">Select a service…</option>
+                    {cfg.services.slice(0, 6).map((s, i) => (
+                      <option key={i} value={s.title}>{s.title}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Preferred Date</label>
+                  <input className="form-input" type="date" />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Preferred Time</label>
+                  <div className="booking-slots">
+                    {TIME_SLOTS.map((slot, i) => (
+                      <div key={i} className={`time-slot${i === 2 ? ' selected' : ''}`}>{slot}</div>
+                    ))}
+                  </div>
+                </div>
+                <button type="button" className="form-submit" style={{ marginTop: 20 }}>
+                  <Calendar size={16} style={{ display: 'inline', marginRight: 8 }} />
+                  Request Appointment
+                </button>
+                <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 10, textAlign: 'center' }}>
+                  This is a preview — bookings go to {cfg.name}&apos;s team.
+                </p>
+              </div>
+              <div className="booking-info">
+                <p className="section-label">Flexible Scheduling</p>
+                <h2 className="section-h2" style={{ marginBottom: 32 }}>Book at your convenience</h2>
+                <div className="booking-feature">
+                  <div className="booking-feature-icon"><Clock size={20} color="#fff" /></div>
+                  <div>
+                    <div className="booking-feature-title">Same-Day &amp; Next-Day Available</div>
+                    <p className="booking-feature-desc">We keep slots open every week so you can get help when you need it most.</p>
+                  </div>
+                </div>
+                <div className="booking-feature">
+                  <div className="booking-feature-icon"><Shield size={20} color="#fff" /></div>
+                  <div>
+                    <div className="booking-feature-title">No Commitment Required</div>
+                    <p className="booking-feature-desc">Request a booking and we&apos;ll reach out to confirm — no payment needed upfront.</p>
+                  </div>
+                </div>
+                <div className="booking-feature">
+                  <div className="booking-feature-icon"><CheckCircle size={20} color="#fff" /></div>
+                  <div>
+                    <div className="booking-feature-title">Free On-Site Estimate</div>
+                    <p className="booking-feature-desc">Every appointment includes a free estimate. You&apos;ll know exactly what you&apos;re paying before we start.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ── FAQs ─────────────────────────────────────────── */}
         {cfg.faqs.length > 0 && (
