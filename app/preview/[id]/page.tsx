@@ -1121,6 +1121,59 @@ export default async function PreviewPage({
           </div>
         </section>
 
+        {/* ── AI Chat callout ──────────────────────────────── */}
+        <div style={{ background: '#0f172a', borderTop: '1px solid #1e293b', padding: '48px 24px' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+            <div>
+              <p style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: c.accent, marginBottom: 12 }}>Included With Every Site</p>
+              <h2 style={{ fontSize: 'clamp(22px,3vw,32px)', fontWeight: 900, color: '#fff', lineHeight: 1.2, marginBottom: 14 }}>
+                A 24/7 AI assistant answers your customers — even at 2am
+              </h2>
+              <p style={{ fontSize: 15, color: '#94a3b8', lineHeight: 1.7, marginBottom: 24 }}>
+                Every Fast Websites site comes with an AI chat widget that knows your services, pricing, and location. It captures leads, answers questions, and books appointments while you sleep.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  `"Do you serve ${cfg.serviceArea.city}?" — answered instantly`,
+                  `"How much does ${cfg.services[0]?.title ?? cfg.industryLabel} cost?" — answered instantly`,
+                  '"Can I book an appointment?" — captured as a lead for you',
+                ].map((line, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: '#cbd5e1' }}>
+                    <div style={{ width: 20, height: 20, borderRadius: 6, background: `${c.accent}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <CheckCircle size={12} color={c.accent} />
+                    </div>
+                    {line}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Mini chat preview */}
+            <div style={{ background: '#1e293b', borderRadius: 16, overflow: 'hidden', border: '1px solid #334155' }}>
+              <div style={{ background: '#0f172a', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 8, borderBottom: '1px solid #334155' }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#4ade80' }} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{cfg.shortName} — AI Assistant</span>
+              </div>
+              <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ background: '#334155', borderRadius: '12px 12px 12px 4px', padding: '10px 14px', fontSize: 13, color: '#e2e8f0', maxWidth: '85%' }}>
+                  Hi! I can answer questions about our {cfg.industryLabel.toLowerCase()} services in {cfg.serviceArea.city}. What can I help you with? 👋
+                </div>
+                <div style={{ background: c.accent, borderRadius: '12px 12px 4px 12px', padding: '10px 14px', fontSize: 13, color: '#fff', maxWidth: '85%', alignSelf: 'flex-end' }}>
+                  How much does {cfg.services[0]?.title ?? 'your service'} cost?
+                </div>
+                <div style={{ background: '#334155', borderRadius: '12px 12px 12px 4px', padding: '10px 14px', fontSize: 13, color: '#e2e8f0', maxWidth: '85%' }}>
+                  Great question! Our {cfg.services[0]?.title ?? 'service'} pricing starts at {(cfg.pricing?.plans?.[0]?.price) ?? 'a competitive rate'}. Want me to get you a free quote? 🙌
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#0f172a', borderRadius: 10, padding: '8px 12px', marginTop: 4, border: '1px solid #334155' }}>
+                  <span style={{ fontSize: 12, color: '#475569', flex: 1 }}>Ask a question…</span>
+                  <div style={{ width: 26, height: 26, borderRadius: 8, background: c.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <ArrowRight size={12} color="#fff" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* ── CTA banner ───────────────────────────────────── */}
         <div className="cta-bg">
           <div className="cta-inner">
