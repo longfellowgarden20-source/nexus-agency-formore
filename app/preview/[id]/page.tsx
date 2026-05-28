@@ -276,10 +276,13 @@ export default async function PreviewPage({
           .pricing-feature-featured { color: rgba(255,255,255,0.9); }
           .pricing-outro { text-align: center; margin-top: 32px; font-size: 14px; color: #64748b; }
 
-          /* Testimonials */
+          /* Testimonials conveyor */
           .testimonials-bg { background: #f8fafc; border-top: 1px solid #e2e8f0; }
-          .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 48px; }
-          .testimonial-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; }
+          .testimonials-track-wrap { width: 100%; overflow: hidden; margin-top: 48px; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); }
+          .testimonials-track { display: flex; gap: 20px; width: max-content; animation: reviews-scroll 32s linear infinite; will-change: transform; }
+          .testimonials-track:hover { animation-play-state: paused; }
+          @keyframes reviews-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+          .testimonial-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; width: 320px; flex-shrink: 0; }
           .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; }
           .testimonial-quote { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
           .testimonial-name { font-size: 14px; font-weight: 700; color: #0f172a; }
@@ -681,19 +684,22 @@ export default async function PreviewPage({
                   </div>
                 )}
               </div>
-              <div className="testimonials-grid">
-                {cfg.testimonials.map((t, i) => (
-                  <div key={i} className="testimonial-card">
-                    <div className="testimonial-stars">
-                      {[...Array(5)].map((_, si) => (
-                        <Star key={si} size={14} color={c.accent} fill={c.accent} />
-                      ))}
+              <div className="testimonials-track-wrap">
+                <div className="testimonials-track">
+                  {/* doubled for seamless loop */}
+                  {[...cfg.testimonials, ...cfg.testimonials].map((t, i) => (
+                    <div key={i} className="testimonial-card">
+                      <div className="testimonial-stars">
+                        {[1,2,3,4,5].map((s) => (
+                          <Star key={s} size={14} color={c.accent} fill={c.accent} />
+                        ))}
+                      </div>
+                      <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
+                      <div className="testimonial-name">{t.name}</div>
+                      <div className="testimonial-location">{t.location}</div>
                     </div>
-                    <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
-                    <div className="testimonial-name">{t.name}</div>
-                    <div className="testimonial-location">{t.location}</div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </section>
