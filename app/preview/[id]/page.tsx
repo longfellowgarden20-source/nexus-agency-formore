@@ -318,7 +318,7 @@ export default async function PreviewPage({
           @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
           /* Powered by badge */
-          .powered-badge { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+          .powered-badge { position: fixed; bottom: 20px; left: 20px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
           .powered-badge span { font-size: 12px; font-weight: 700; color: #fff; }
         `}</style>
       <div>
