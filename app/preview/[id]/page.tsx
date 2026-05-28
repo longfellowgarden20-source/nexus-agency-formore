@@ -195,20 +195,20 @@ export default async function PreviewPage({
       <style>{`
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
           html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; scroll-behavior: smooth; }
-          body { background: #fff; color: #1e293b; }
+          body { background: #fff; color: #1e293b; overflow-x: hidden; }
           a { color: inherit; }
           img { display: block; max-width: 100%; }
 
           /* Demo banner */
-          .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-          .demo-banner-text { font-size: 12px; color: #94a3b8; flex: 1; min-width: 0; }
+          .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; overflow: hidden; }
+          .demo-banner-text { font-size: 12px; color: #94a3b8; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
           .demo-banner-text strong { color: #f1f5f9; }
           @media (max-width: 500px) { .demo-banner-text .hide-mobile { display: none; } }
-          .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+          .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
 
           /* Search demand bar */
-          .demand-bar { background: ${c.accentLight}; border-bottom: 1px solid ${c.accentBorder}; padding: 9px 24px; display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
-          .demand-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; font-weight: 500; }
+          .demand-bar { background: ${c.accentLight}; border-bottom: 1px solid ${c.accentBorder}; padding: 9px 16px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; overflow: hidden; }
+          .demand-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; font-weight: 500; min-width: 0; }
           .demand-item strong { color: #0f172a; font-weight: 700; }
           .demand-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; flex-shrink: 0; }
 
@@ -407,7 +407,7 @@ export default async function PreviewPage({
           @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
           /* Stats bar */
-          .stats-bar { background: ${c.accent}; padding: 20px 24px; }
+          .stats-bar { background: ${c.accent}; padding: 20px 16px; overflow: hidden; }
           .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
           .stat-item { text-align: center; }
           .stat-value { font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #fff; letter-spacing: -0.02em; }
@@ -415,10 +415,10 @@ export default async function PreviewPage({
           @media (max-width: 640px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
 
           /* Trust badges */
-          .trust-bar { background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 20px 24px; }
-          .trust-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
-          .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; }
-          .trust-badge-icon { width: 32px; height: 32px; border-radius: 8px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+          .trust-bar { background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 16px; overflow: hidden; }
+          .trust-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+          .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #475569; white-space: nowrap; }
+          .trust-badge-icon { width: 28px; height: 28px; border-radius: 8px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
           /* Before / After comparison */
           .compare-bg { background: #0f172a; border-top: 1px solid #1e293b; }
