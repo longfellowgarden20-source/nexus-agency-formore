@@ -375,6 +375,37 @@ export default async function PreviewPage({
           .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #475569; }
           .trust-badge-icon { width: 32px; height: 32px; border-radius: 8px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
+          /* Before / After comparison */
+          .compare-bg { background: #0f172a; border-top: 1px solid #1e293b; }
+          .compare-inner { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+          .compare-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; color: ${c.accent}; margin-bottom: 14px; text-align: center; }
+          .compare-h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; color: #fff; line-height: 1.2; letter-spacing: -0.02em; text-align: center; margin-bottom: 48px; }
+          .compare-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; }
+          .compare-card { border-radius: 20px; overflow: hidden; }
+          .compare-card-before { background: #1e293b; border: 2px solid #334155; }
+          .compare-card-after { background: #fff; border: 2px solid ${c.accent}; box-shadow: 0 0 0 4px ${c.accent}22; }
+          .compare-card-header { padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+          .compare-card-header-before { background: #0f172a; border-bottom: 1px solid #334155; }
+          .compare-card-header-after { background: ${c.accent}; border-bottom: 1px solid ${c.accentDark}; }
+          .compare-card-dots { display: flex; gap: 6px; }
+          .compare-dot { width: 10px; height: 10px; border-radius: 50%; }
+          .compare-card-url { font-size: 11px; font-weight: 600; flex: 1; text-align: center; border-radius: 6px; padding: 4px 10px; }
+          .compare-url-before { background: #334155; color: #64748b; }
+          .compare-url-after { background: rgba(255,255,255,0.2); color: #fff; }
+          .compare-card-body { padding: 24px; }
+          .compare-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e293b; }
+          .compare-row:last-child { border-bottom: none; }
+          .compare-row-after { border-bottom-color: #e2e8f0; }
+          .compare-icon-bad { width: 28px; height: 28px; border-radius: 8px; background: #ef444420; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+          .compare-icon-good { width: 28px; height: 28px; border-radius: 8px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+          .compare-row-text { font-size: 13px; font-weight: 500; }
+          .compare-row-text-before { color: #64748b; }
+          .compare-row-text-after { color: #0f172a; }
+          .compare-vs { width: 48px; height: 48px; border-radius: 50%; background: ${c.accent}; color: #fff; font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 0 6px ${c.accent}33; }
+          .compare-badge-before { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; padding: 6px 12px; background: #ef444420; border-radius: 999px; font-size: 12px; font-weight: 700; color: #ef4444; }
+          .compare-badge-after { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; padding: 6px 12px; background: #22c55e20; border-radius: 999px; font-size: 12px; font-weight: 700; color: #22c55e; }
+          @media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } .compare-vs { margin: 0 auto; } }
+
           /* Process / How it works */
           .process-bg { background: #fff; border-top: 1px solid #e2e8f0; }
           .process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; position: relative; }
@@ -592,6 +623,89 @@ export default async function PreviewPage({
             </div>
           </section>
         )}
+
+        {/* ── Before / After ───────────────────────────────── */}
+        <section className="compare-bg">
+          <div className="compare-inner">
+            <p className="compare-label">Why This Matters</p>
+            <h2 className="compare-h2">
+              Most {cfg.industryLabel.toLowerCase()} businesses are invisible online.<br />
+              <span style={{ color: c.accent }}>Yours doesn&apos;t have to be.</span>
+            </h2>
+            <div className="compare-grid">
+
+              {/* Before card */}
+              <div className="compare-card compare-card-before">
+                <div className="compare-card-header compare-card-header-before">
+                  <div className="compare-card-dots">
+                    <div className="compare-dot" style={{ background: '#ef4444' }} />
+                    <div className="compare-dot" style={{ background: '#f59e0b' }} />
+                    <div className="compare-dot" style={{ background: '#334155' }} />
+                  </div>
+                  <div className="compare-card-url compare-url-before">No website found</div>
+                </div>
+                <div className="compare-card-body">
+                  {[
+                    'No website — customers can\'t find you',
+                    'Outdated Facebook, last post 2+ years ago',
+                    'No way to book online',
+                    'Losing jobs to competitors with websites',
+                    'Phone number buried on Yelp',
+                    'No way to show off your work',
+                  ].map((text, i) => (
+                    <div key={i} className="compare-row">
+                      <div className="compare-icon-bad">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round"/></svg>
+                      </div>
+                      <span className="compare-row-text compare-row-text-before">{text}</span>
+                    </div>
+                  ))}
+                  <div className="compare-badge-before">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round"/></svg>
+                    Invisible to local customers
+                  </div>
+                </div>
+              </div>
+
+              {/* VS divider */}
+              <div className="compare-vs">VS</div>
+
+              {/* After card */}
+              <div className="compare-card compare-card-after">
+                <div className="compare-card-header compare-card-after" style={{ borderRadius: 0 }}>
+                  <div className="compare-card-dots">
+                    <div className="compare-dot" style={{ background: 'rgba(255,255,255,0.4)' }} />
+                    <div className="compare-dot" style={{ background: 'rgba(255,255,255,0.4)' }} />
+                    <div className="compare-dot" style={{ background: 'rgba(255,255,255,0.4)' }} />
+                  </div>
+                  <div className="compare-card-url compare-url-after">{cfg.name.toLowerCase().replace(/\s+/g, '')}.com</div>
+                </div>
+                <div className="compare-card-body">
+                  {[
+                    `Professional website live in 48 hours`,
+                    'Customers can find you on Google',
+                    'Online booking & quote requests',
+                    `Showcase your ${cfg.industryLabel.toLowerCase()} work`,
+                    'Phone, email & location always visible',
+                    'Built to rank in local search',
+                  ].map((text, i) => (
+                    <div key={i} className="compare-row compare-row-after">
+                      <div className="compare-icon-good">
+                        <CheckCircle size={14} color={c.accent} />
+                      </div>
+                      <span className="compare-row-text compare-row-text-after">{text}</span>
+                    </div>
+                  ))}
+                  <div className="compare-badge-after">
+                    <CheckCircle size={12} color="#22c55e" />
+                    Ready to get you found &amp; booked
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
 
         {/* ── How it works ─────────────────────────────────── */}
         <section className="section process-bg">
