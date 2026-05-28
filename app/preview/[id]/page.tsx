@@ -164,6 +164,7 @@ export default async function PreviewPage({
   const c = cfg.colors
   const agencyEmail = process.env.GMAIL_USER ?? 'robthebob2003@gmail.com'
   const heroImage = getHeroImage(cfg.industry)
+  const mapsEmbedKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY ?? process.env.GOOGLE_MAPS_API_KEY ?? ''
 
   // Monthly search volume — plausible numbers by industry keyword
   const SEARCH_VOLUMES: Record<string, number> = {
@@ -950,7 +951,7 @@ export default async function PreviewPage({
                     </div>
                   )}
                 </div>
-                {cfg.mapsPlaceId ? (
+                {cfg.mapsPlaceId && mapsEmbedKey ? (
                   <div style={{ borderRadius: 20, overflow: 'hidden', border: `2px solid ${c.accentBorder}`, aspectRatio: '4/3', width: '100%' }}>
                     <iframe
                       title="Business location"
@@ -960,7 +961,7 @@ export default async function PreviewPage({
                       loading="lazy"
                       allowFullScreen
                       referrerPolicy="no-referrer-when-downgrade"
-                      src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY ?? process.env.GOOGLE_MAPS_API_KEY}&q=place_id:${cfg.mapsPlaceId}`}
+                      src={`https://www.google.com/maps/embed/v1/place?key=${mapsEmbedKey}&q=place_id:${cfg.mapsPlaceId}`}
                     />
                   </div>
                 ) : (
