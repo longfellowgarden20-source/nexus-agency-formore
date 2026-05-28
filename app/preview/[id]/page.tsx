@@ -127,14 +127,8 @@ export default async function PreviewPage({
   const agencyEmail = process.env.GMAIL_USER ?? 'robthebob2003@gmail.com'
 
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{cfg.name} — Website Preview by Fast Websites</title>
-        <meta name="description" content={cfg.seo.defaultDescription} />
-        <meta name="robots" content="noindex, nofollow" />
-        <style>{`
+    <>
+      <style>{`
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
           html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; scroll-behavior: smooth; }
           body { background: #fff; color: #1e293b; }
@@ -327,8 +321,7 @@ export default async function PreviewPage({
           .powered-badge { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
           .powered-badge span { font-size: 12px; font-weight: 700; color: #fff; }
         `}</style>
-      </head>
-      <body>
+      <div>
 
         {/* ── Demo banner ──────────────────────────────────── */}
         <div className="demo-banner">
@@ -737,7 +730,7 @@ export default async function PreviewPage({
           <span>Powered by Fast Websites</span>
         </a>
 
-      </body>
-    </html>
+      </div>
+    </>
   )
 }
