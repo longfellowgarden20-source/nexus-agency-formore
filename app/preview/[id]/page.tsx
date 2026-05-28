@@ -132,8 +132,11 @@ export default async function PreviewPage({
 
   if (error || !row) notFound()
 
-  // Increment views + first-open notification (non-blocking)
-  void getSupabaseAdmin().rpc('increment_preview_views', { preview_id: id })
+  // Increment view count directly — no RPC needed
+  void getSupabaseAdmin()
+    .from('previews')
+    .update({ view_count: (row.view_count ?? 0) + 1 })
+    .eq('id', id)
 
   if (!row.viewed) {
     void getSupabaseAdmin()
