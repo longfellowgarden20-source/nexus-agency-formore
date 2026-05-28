@@ -327,7 +327,6 @@ export default async function PreviewPage({
           .testimonials-bg { background: #f8fafc; border-top: 1px solid #e2e8f0; }
           .testimonials-track-wrap { width: 100%; overflow: hidden; margin-top: 48px; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); }
           .testimonials-track { display: flex; gap: 20px; width: max-content; animation: reviews-scroll 32s linear infinite; will-change: transform; }
-          .testimonials-track:hover { animation-play-state: paused; }
           @keyframes reviews-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
           .testimonial-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; width: 320px; flex-shrink: 0; }
           .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; }
