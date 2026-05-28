@@ -147,8 +147,12 @@ export default async function PreviewPage({
           .demo-banner-text strong { color: #f1f5f9; }
           .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
 
+          /* Push content below fixed demo banner */
+          body { padding-top: 44px; }
+          @media (max-width: 600px) { body { padding-top: 80px; } }
+
           /* Nav */
-          .nav { position: sticky; top: 40px; z-index: 50; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e2e8f0; }
+          .nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e2e8f0; }
           .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
           .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
           .nav-logo-icon { width: 38px; height: 38px; border-radius: 10px; background: ${c.accent}; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
@@ -337,7 +341,7 @@ export default async function PreviewPage({
         </div>
 
         {/* ── Navigation ───────────────────────────────────── */}
-        <nav className="nav" style={{ top: 40 }}>
+        <nav className="nav">
           <div className="nav-inner">
             <a href="#" className="nav-logo">
               <div className="nav-logo-icon">{cfg.logoEmoji}</div>
