@@ -208,7 +208,7 @@ export default async function PreviewPage({
           .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; overflow: hidden; }
           .demo-banner-text { font-size: 12px; color: #94a3b8; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
           .demo-banner-text strong { color: #f1f5f9; }
-          @media (max-width: 500px) { .demo-banner-text .hide-mobile { display: none; } }
+          @media (max-width: 500px) { .demo-banner-text .hide-mobile { display: none; } .demo-banner { padding: 8px 12px; } .demo-banner-cta { padding: 6px 12px; font-size: 11px; } }
           .demo-banner-cta { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; background: ${c.accent}; color: #fff; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
 
           /* Search demand bar */
@@ -316,6 +316,7 @@ export default async function PreviewPage({
           .pricing-card { border: 2px solid ${c.accentBorder}; border-radius: 20px; background: #fff; overflow: hidden; transition: border-color 0.2s; display: flex; flex-direction: column; }
           .pricing-card:hover { border-color: ${c.accent}; }
           .pricing-card-featured { border-color: ${c.accent}; background: ${c.accent}; transform: scale(1.02); box-shadow: 0 20px 60px -10px rgba(0,0,0,0.25); }
+          @media (max-width: 640px) { .pricing-card-featured { transform: none; } }
           .pricing-featured-badge { padding: 8px 16px; background: ${c.accentDark}; color: #fff; font-size: 12px; font-weight: 700; text-align: center; }
           .pricing-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
           .pricing-name { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
@@ -377,7 +378,7 @@ export default async function PreviewPage({
           .contact-info-item { display: flex; align-items: center; gap: 14px; }
           .contact-info-icon { width: 44px; height: 44px; border-radius: 12px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
           .contact-info-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-weight: 600; }
-          .contact-info-value { font-size: 15px; font-weight: 600; color: #0f172a; text-decoration: none; }
+          .contact-info-value { font-size: 15px; font-weight: 600; color: #0f172a; text-decoration: none; word-break: break-all; }
           .contact-info-value:hover { color: ${c.accent}; }
           .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
           .form-label { font-size: 13px; font-weight: 600; color: #374151; }
@@ -487,11 +488,12 @@ export default async function PreviewPage({
           .booking-feature-icon { width: 44px; height: 44px; border-radius: 12px; background: ${c.accent}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
           .booking-feature-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
           .booking-feature-desc { font-size: 13px; color: #64748b; line-height: 1.5; }
-          @media (max-width: 768px) { .booking-grid { grid-template-columns: 1fr; } }
+          @media (max-width: 768px) { .booking-grid { grid-template-columns: 1fr; gap: 32px; } }
 
           /* Powered by badge */
-          .powered-badge { position: fixed; bottom: 20px; left: 20px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-          .powered-badge span { font-size: 12px; font-weight: 700; color: #fff; }
+          .powered-badge { position: fixed; bottom: 16px; left: 16px; z-index: 100; display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #0f172a; border-radius: 999px; border: 1px solid #1e293b; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+          .powered-badge span { font-size: 11px; font-weight: 700; color: #fff; }
+          @media (max-width: 640px) { .powered-badge { bottom: 12px; left: 12px; padding: 7px 12px; } .powered-badge span { display: none; } }
         `}</style>
       <div>
 
