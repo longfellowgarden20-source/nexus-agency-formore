@@ -74,19 +74,20 @@ export default function ChatWidget() {
         }}>
           {/* Header */}
           <div style={{
-            background: ACCENT, padding: '14px 16px',
+            background: '#0f172a', padding: '14px 16px',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: '50%',
-                background: 'rgba(255,255,255,0.2)',
+                background: ACCENT,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 13, fontWeight: 800, color: '#fff', flexShrink: 0, letterSpacing: '-0.5px',
               }}>FW</div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Fast Websites</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9' }}>Fast Websites</div>
+                <div style={{ fontSize: 11, color: '#64748b', display: 'flex', alignItems: 'center', gap: 4 }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
                   Online now
                 </div>
@@ -94,7 +95,7 @@ export default function ChatWidget() {
             </div>
             <button
               onClick={() => setOpen(false)}
-              style={{ background: 'rgba(255,255,255,0.15)', border: 'none', cursor: 'pointer', borderRadius: 8, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              style={{ background: 'rgba(255,255,255,0.06)', border: 'none', cursor: 'pointer', borderRadius: 8, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
             </button>
@@ -189,8 +190,10 @@ export default function ChatWidget() {
             style={{
               position: 'relative', zIndex: 1,
               width: 56, height: 56, borderRadius: '50%',
-              background: ACCENT, border: 'none', cursor: 'pointer',
-              boxShadow: `0 4px 24px ${ACCENT}66`,
+              background: '#0a0f1a',
+              border: `1.5px solid ${ACCENT}66`,
+              cursor: 'pointer',
+              boxShadow: `0 0 16px ${ACCENT}55, 0 0 32px ${ACCENT}22`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'transform 0.2s',
             }}
@@ -198,13 +201,10 @@ export default function ChatWidget() {
             onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
           >
             {open ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round"/></svg>
             ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="9" cy="8" r="3" stroke="white" strokeWidth="1.8"/>
-                <path d="M3 20c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M17 10h4M17 13h2" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                <rect x="14" y="7" width="8" height="8" rx="2" stroke="white" strokeWidth="1.8"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             )}
           </button>
