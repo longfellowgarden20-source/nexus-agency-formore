@@ -311,7 +311,7 @@ export default async function PreviewPage({
           .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
           @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
           .hero-h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
-          .hero-accent { color: ${c.accent}; }
+          .hero-accent { color: ${c.accent}; filter: brightness(1.4) saturate(1.2); }
           .hero-sub { font-size: 18px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
           .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
           .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: ${c.accent}; color: #fff; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background 0.15s; }
@@ -378,7 +378,7 @@ export default async function PreviewPage({
           .pricing-cta { display: block; text-align: center; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; margin-bottom: 24px; transition: background 0.15s; }
           .pricing-cta-normal { background: ${c.accent}; color: #fff; }
           .pricing-cta-normal:hover { background: ${c.accentDark}; }
-          .pricing-cta-featured { background: #fff; color: ${c.accent}; }
+          .pricing-cta-featured { background: #fff; color: ${c.accentDark}; }
           .pricing-cta-featured:hover { background: #f1f5f9; }
           .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
           .pricing-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #475569; }
@@ -485,7 +485,7 @@ export default async function PreviewPage({
           /* Before / After comparison */
           .compare-bg { background: #0f172a; border-top: 1px solid #1e293b; }
           .compare-inner { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
-          .compare-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; color: ${c.accent}; margin-bottom: 14px; text-align: center; }
+          .compare-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; color: #94a3b8; margin-bottom: 14px; text-align: center; }
           .compare-h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; color: #fff; line-height: 1.2; letter-spacing: -0.02em; text-align: center; margin-bottom: 48px; }
           .compare-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; width: 100%; }
           .compare-card { border-radius: 20px; overflow: hidden; }
