@@ -133,37 +133,61 @@ export default function PreviewChatWidget({ biz }: { biz: BusinessInfo }) {
               <path d="M18 6L6 18M6 6l12 12" stroke={accent} strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
           ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H7l-4 4V5z" fill={accent} fillOpacity="0.2" stroke={accent} strokeWidth="1.8" strokeLinejoin="round"/>
+                <circle cx="8" cy="11" r="1.2" fill={accent}/>
+                <circle cx="12" cy="11" r="1.2" fill={accent}/>
+                <circle cx="16" cy="11" r="1.2" fill={accent}/>
+              </svg>
+              <div style={{
+                position: 'absolute', top: 0, right: 0,
+                background: '#0a0f1a', border: `1px solid ${accent}`,
+                borderRadius: 6, padding: '1px 4px',
+                fontSize: 8, fontWeight: 800, color: accent,
+                lineHeight: 1.4, letterSpacing: '0.5px',
+              }}>AI</div>
+            </>
           )}
           </button>
         </div>{/* end neon ring wrapper */}
 
         {/* Tooltip label — slides in from right */}
         <div style={{
+          position: 'relative',
           background: '#0f172a',
           border: `1px solid ${accent}44`,
           borderRadius: 10,
-          padding: '8px 14px',
+          padding: '8px 12px 8px 14px',
           boxShadow: `0 4px 20px rgba(0,0,0,0.4), 0 0 0 1px ${accent}22`,
-          whiteSpace: 'nowrap',
           pointerEvents: labelVisible ? 'auto' : 'none',
           opacity: labelVisible ? 1 : 0,
           transform: labelVisible ? 'translateX(0)' : 'translateX(12px)',
           transition: 'opacity 0.3s, transform 0.3s',
-          cursor: 'pointer',
-        }}
-          onClick={() => setOpen(true)}
-        >
-          <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 1 }}>Chat with</div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9' }}>{shortName}</div>
+          display: 'flex', alignItems: 'center', gap: 10,
+          maxWidth: 'calc(100vw - 100px)',
+        }}>
+          {/* Text — clicks open chat */}
+          <div style={{ cursor: 'pointer', minWidth: 0 }} onClick={() => setOpen(true)}>
+            <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 1 }}>Chat with</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {shortName}
+            </div>
+          </div>
+          {/* Dismiss × */}
+          <button
+            onClick={e => { e.stopPropagation(); setLabelVisible(false) }}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: 2, flexShrink: 0,
+              color: '#475569', lineHeight: 1, fontSize: 16,
+            }}
+            aria-label="Dismiss"
+          >×</button>
           {/* Arrow pointing right toward the button */}
           <div style={{
-            position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%)',
+            position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%) rotate(45deg)',
             width: 10, height: 10, background: '#0f172a',
             border: `1px solid ${accent}44`, borderLeft: 'none', borderBottom: 'none',
-            rotate: '45deg',
           }} />
         </div>
       </div>
