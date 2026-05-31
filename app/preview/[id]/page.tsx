@@ -3,29 +3,74 @@ import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { transporter } from '@/lib/mailer'
 import { Phone, Mail, MapPin, CheckCircle, ArrowRight, Zap, Star, ChevronDown, Shield, Award, Clock, Calendar, Users } from 'lucide-react'
 import PreviewChatWidget from './PreviewChatWidget'
+import ClaimButton from './ClaimButton'
 
 // Unsplash hero images by industry keyword
 const HERO_IMAGES: Record<string, string> = {
+  // Outdoor / property
   landscap: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
   lawn:     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
   garden:   'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80&auto=format&fit=crop',
+  tree:     'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80&auto=format&fit=crop',
+  fence:    'https://images.unsplash.com/photo-1558618047-3c8c76ca4fb9?w=1600&q=80&auto=format&fit=crop',
+  deck:     'https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?w=1600&q=80&auto=format&fit=crop',
+  pool:     'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=1600&q=80&auto=format&fit=crop',
+  // Trades
   plumb:    'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1600&q=80&auto=format&fit=crop',
   electric: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1600&q=80&auto=format&fit=crop',
-  clean:    'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80&auto=format&fit=crop',
   roof:     'https://images.unsplash.com/photo-1632759145354-ac2e0ebe3d41?w=1600&q=80&auto=format&fit=crop',
   hvac:     'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=80&auto=format&fit=crop',
+  heat:     'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=80&auto=format&fit=crop',
+  air:      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1600&q=80&auto=format&fit=crop',
   paint:    'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1600&q=80&auto=format&fit=crop',
   contrac:  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  remodel:  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  floor:    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1600&q=80&auto=format&fit=crop',
+  tile:     'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1600&q=80&auto=format&fit=crop',
+  concrete: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  window:   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  // Cleaning
+  clean:    'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80&auto=format&fit=crop',
+  pressure: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  wash:     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  maid:     'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80&auto=format&fit=crop',
+  junk:     'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  // Automotive
   auto:     'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
   mechanic: 'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
+  tow:      'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
+  detai:    'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1600&q=80&auto=format&fit=crop',
+  // Beauty / wellness
   salon:    'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80&auto=format&fit=crop',
   hair:     'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80&auto=format&fit=crop',
+  barber:   'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1600&q=80&auto=format&fit=crop',
+  nail:     'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1600&q=80&auto=format&fit=crop',
+  spa:      'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80&auto=format&fit=crop',
+  massage:  'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80&auto=format&fit=crop',
   fitness:  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
   gym:      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
+  yoga:     'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&q=80&auto=format&fit=crop',
+  // Pets
+  groom:    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80&auto=format&fit=crop',
+  pet:      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80&auto=format&fit=crop',
+  dog:      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80&auto=format&fit=crop',
+  veterin:  'https://images.unsplash.com/photo-1559190394-df5a28aab5c5?w=1600&q=80&auto=format&fit=crop',
+  // Pest / security
+  pest:     'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  extermina:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&auto=format&fit=crop',
+  security: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  lock:     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80&auto=format&fit=crop',
+  // Medical / professional
   dental:   'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1600&q=80&auto=format&fit=crop',
   medical:  'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1600&q=80&auto=format&fit=crop',
+  chiro:    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1600&q=80&auto=format&fit=crop',
+  // Food / hospitality
   restaur:  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80&auto=format&fit=crop',
   food:     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80&auto=format&fit=crop',
+  cater:    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80&auto=format&fit=crop',
+  // Moving / storage
+  mov:      'https://images.unsplash.com/photo-1600518464441-9306c6e9ed75?w=1600&q=80&auto=format&fit=crop',
+  storage:  'https://images.unsplash.com/photo-1600518464441-9306c6e9ed75?w=1600&q=80&auto=format&fit=crop',
 }
 
 function getHeroImage(industry: string): string {
@@ -167,6 +212,7 @@ export default async function PreviewPage({
 
   const c = cfg.colors
   const agencyEmail = process.env.GMAIL_USER ?? 'robthebob2003@gmail.com'
+  const agencyPhone = process.env.AGENCY_PHONE ?? '(562) 333-1388'
   const heroImage = getHeroImage(cfg.industry)
   const mapsEmbedKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY ?? process.env.GOOGLE_MAPS_API_KEY ?? ''
 
@@ -247,7 +293,7 @@ export default async function PreviewPage({
           .nav-logo-name { font-size: 17px; font-weight: 800; color: #0f172a; letter-spacing: -0.01em; }
           .nav-links { display: flex; align-items: center; gap: 24px; }
           .nav-link { font-size: 14px; color: #475569; text-decoration: none; font-weight: 500; transition: color 0.15s; }
-          .nav-link:hover { color: ${c.accent}; }
+          .nav-link:hover { color: ${c.accentDark}; }
           .nav-cta { padding: 9px 20px; background: ${c.accent}; color: #fff; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background 0.15s; }
           .nav-cta:hover { background: ${c.accentDark}; }
           @media (max-width: 768px) { .nav-links { display: none; } }
@@ -281,14 +327,14 @@ export default async function PreviewPage({
           .hero-card-service { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
           .hero-card-service:last-child { border-bottom: none; }
           .hero-card-service-text { font-size: 14px; color: rgba(255,255,255,0.85); }
-          .hero-card-phone { margin-top: 16px; padding: 12px 16px; background: ${c.accent}20; border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: ${c.accent}; }
+          .hero-card-phone { margin-top: 16px; padding: 12px 16px; background: ${c.accent}20; border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: ${c.accentDark}; }
           @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; gap: 0; } .hero-card { display: none; } }
           @media (max-width: 640px) { .hero-inner { padding: 48px 16px; } .hero-h1 { word-break: break-word; } .hero-ctas { flex-direction: column; } .btn-primary, .btn-secondary { width: 100%; justify-content: center; } .hero-proof { flex-direction: column; gap: 6px; } .hero-proof-sep { display: none; } }
 
           /* Section commons */
           .section { padding: 80px 24px; }
           .section-inner { max-width: 1200px; margin: 0 auto; }
-          .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; color: ${c.accent}; margin-bottom: 14px; }
+          .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; color: ${c.accentDark}; margin-bottom: 14px; }
           .section-h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #0f172a; line-height: 1.2; letter-spacing: -0.02em; }
           .section-intro { font-size: 17px; color: #475569; line-height: 1.7; max-width: 640px; margin-top: 14px; }
           .section-center { text-align: center; }
@@ -357,7 +403,7 @@ export default async function PreviewPage({
           .nearby-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
           .nearby-pill { padding: 6px 14px; border: 1px solid #e2e8f0; border-radius: 999px; font-size: 13px; color: #475569; background: #fff; font-weight: 500; }
           .map-placeholder { border-radius: 20px; overflow: hidden; border: 2px solid #e2e8f0; aspect-ratio: 4/3; background: linear-gradient(135deg, ${c.accentLight} 0%, #f1f5f9 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
-          .map-city { font-size: 24px; font-weight: 800; color: ${c.accent}; }
+          .map-city { font-size: 24px; font-weight: 800; color: ${c.accentDark}; }
           .map-label { font-size: 13px; color: #64748b; }
           @media (max-width: 768px) { .service-area-grid { grid-template-columns: 1fr; } }
 
@@ -368,7 +414,7 @@ export default async function PreviewPage({
           details.faq[open] { border-color: ${c.accent}; background: ${c.accentLight}; }
           details.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; cursor: pointer; list-style: none; font-size: 15px; font-weight: 600; color: #0f172a; }
           details.faq summary::-webkit-details-marker { display: none; }
-          details.faq summary .chevron { width: 18px; height: 18px; color: ${c.accent}; flex-shrink: 0; transition: transform 0.2s; }
+          details.faq summary .chevron { width: 18px; height: 18px; color: ${c.accentDark}; flex-shrink: 0; transition: transform 0.2s; }
           details.faq[open] summary .chevron { transform: rotate(180deg); }
           details.faq .faq-answer { padding: 0 24px 20px; font-size: 14px; color: #475569; line-height: 1.7; }
 
@@ -380,7 +426,7 @@ export default async function PreviewPage({
           .contact-info-icon { width: 44px; height: 44px; border-radius: 12px; background: ${c.accentLight}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
           .contact-info-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-weight: 600; }
           .contact-info-value { font-size: 15px; font-weight: 600; color: #0f172a; text-decoration: none; word-break: break-all; }
-          .contact-info-value:hover { color: ${c.accent}; }
+          .contact-info-value:hover { color: ${c.accentDark}; }
           .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
           .form-label { font-size: 13px; font-weight: 600; color: #374151; }
           .form-input { padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 14px; color: #0f172a; outline: none; transition: border-color 0.15s; width: 100%; font-family: inherit; background: #fff; }
@@ -396,7 +442,7 @@ export default async function PreviewPage({
           .cta-h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 16px; }
           .cta-sub { font-size: 18px; color: rgba(255,255,255,0.85); margin-bottom: 36px; }
           .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-          .btn-cta-primary { padding: 14px 28px; background: #fff; color: ${c.accent}; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s; }
+          .btn-cta-primary { padding: 14px 28px; background: #fff; color: ${c.accentDark}; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s; }
           .btn-cta-primary:hover { background: #f1f5f9; }
           .btn-cta-secondary { padding: 14px 28px; border: 2px solid rgba(255,255,255,0.5); color: #fff; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.15s; }
           .btn-cta-secondary:hover { background: rgba(255,255,255,0.15); }
@@ -482,7 +528,7 @@ export default async function PreviewPage({
           .booking-form-sub { font-size: 14px; color: #64748b; margin-bottom: 24px; }
           .booking-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
           .time-slot { padding: 8px 4px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-weight: 600; color: #475569; text-align: center; cursor: pointer; transition: all 0.15s; background: #fff; }
-          .time-slot:hover { border-color: ${c.accent}; color: ${c.accent}; background: ${c.accentLight}; }
+          .time-slot:hover { border-color: ${c.accent}; color: ${c.accentDark}; background: ${c.accentLight}; }
           .time-slot.selected { border-color: ${c.accent}; background: ${c.accent}; color: #fff; }
           .booking-info { padding: 32px 0; }
           .booking-feature { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
@@ -506,9 +552,7 @@ export default async function PreviewPage({
           <p className="demo-banner-text">
             👋 <strong>{cfg.name}</strong><span className="hide-mobile"> — we built this for you. <strong>{competitorCount} competitors</strong> in {cfg.serviceArea.city} have websites.</span>
           </p>
-          <a href={`mailto:${agencyEmail}?subject=I want this website for ${cfg.name}&body=Hi, I just viewed my website preview and I'm interested in getting started.`} className="demo-banner-cta">
-            Claim This Site →
-          </a>
+          <ClaimButton businessName={cfg.name} agencyEmail={agencyEmail} agencyPhone={agencyPhone} />
         </div>
 
         {/* ── Search demand bar ────────────────────────────── */}
