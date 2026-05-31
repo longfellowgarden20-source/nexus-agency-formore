@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { transporter } from '@/lib/mailer'
 import { Phone, Mail, MapPin, CheckCircle, ArrowRight, Zap, Star, ChevronDown, Shield, Award, Clock, Calendar, Users } from 'lucide-react'
+import PreviewChatWidget from './PreviewChatWidget'
 
 // Unsplash hero images by industry keyword
 const HERO_IMAGES: Record<string, string> = {
@@ -144,7 +145,7 @@ export default async function PreviewPage({
       .update({ viewed: true, viewed_at: new Date().toISOString() })
       .eq('id', id)
 
-    const previewUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://nexus-agency-formore-cvufrmzih.vercel.app'}/preview/${id}`
+    const previewUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://nexus-agency-formore.vercel.app'}/preview/${id}`
     void transporter.sendMail({
       from: `Fast Websites <${process.env.GMAIL_USER}>`,
       to: process.env.GMAIL_USER,
@@ -1266,6 +1267,18 @@ export default async function PreviewPage({
         </a>
 
       </div>
+
+      {/* ── Preview chat widget ───────────────────────────── */}
+      <PreviewChatWidget biz={{
+        name: cfg.name,
+        phone: cfg.phone,
+        email: cfg.email,
+        industry: cfg.industry,
+        services: cfg.services,
+        city: cfg.serviceArea.city,
+        state: cfg.serviceArea.state,
+        accentColor: cfg.colors.accent,
+      }} />
     </>
   )
 }

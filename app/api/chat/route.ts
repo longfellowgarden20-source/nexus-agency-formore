@@ -43,7 +43,7 @@ type Message = {
 }
 
 export async function POST(req: NextRequest) {
-  const { messages, clientId } = await req.json()
+  const { messages, clientId, businessConfig } = await req.json()
 
   if (!messages || !Array.isArray(messages)) {
     return NextResponse.json({ error: 'Missing messages' }, { status: 400 })
@@ -51,7 +51,10 @@ export async function POST(req: NextRequest) {
 
   let systemPrompt = DEFAULT_SYSTEM_PROMPT
 
-  if (clientId) {
+  if (businessConfig) {
+    // Inline config from preview pages — no DB lookup needed
+    systemPrompt = buildSystemPrompt(businessConfig as Record<string, string>)
+  } else if (clientId) {
     const { data: client } = await getSupabaseAdmin()
       .from('clients')
       .select('*')
