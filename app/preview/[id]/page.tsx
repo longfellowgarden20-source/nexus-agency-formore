@@ -243,9 +243,11 @@ export default async function PreviewPage({
 
   return (
     <>
+      {/* Preload hero image so LCP fires as early as possible */}
+      <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
       <style>{`
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-          html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; scroll-behavior: smooth; }
+          html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
           body { background: #fff; color: #1e293b; overflow-x: hidden; max-width: 100vw; }
           * { min-width: 0; }
           a { color: inherit; }
@@ -286,7 +288,7 @@ export default async function PreviewPage({
           }
 
           /* Nav */
-          .nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e2e8f0; }
+          .nav { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom: 1px solid #e2e8f0; will-change: transform; }
           .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
           .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
           .nav-logo-icon { width: 38px; height: 38px; border-radius: 10px; background: ${c.accent}; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
@@ -300,7 +302,8 @@ export default async function PreviewPage({
 
           /* Hero */
           .hero { position: relative; min-height: 680px; display: flex; align-items: center; overflow: hidden; }
-          .hero-bg-img { position: absolute; inset: 0; background-image: url('${heroImage}'); background-size: cover; background-position: center; }
+          .hero-bg-img { position: absolute; inset: 0; background-image: url('${heroImage.replace('w=1600', 'w=800')}'); background-size: cover; background-position: center; }
+          @media (min-width: 1024px) { .hero-bg-img { background-image: url('${heroImage}'); } }
           .hero-bg-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.3) 100%); }
           .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(135deg, ${c.accent}33 0%, transparent 50%); }
           .hero-inner { position: relative; max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -319,7 +322,7 @@ export default async function PreviewPage({
           .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
           .hero-proof { display: flex; align-items: center; gap: 16px; font-size: 13px; color: rgba(255,255,255,0.7); flex-wrap: wrap; }
           .hero-proof-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.3); }
-          .hero-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px; backdrop-filter: blur(8px); }
+          .hero-card { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px; }
           .hero-card-header { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px; }
           .hero-card-icon { width: 48px; height: 48px; border-radius: 12px; background: ${c.accent}25; display: flex; align-items: center; justify-content: center; }
           .hero-card-name { font-size: 15px; font-weight: 700; color: #fff; }
