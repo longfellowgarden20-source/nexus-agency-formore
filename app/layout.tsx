@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import ChatWidget from './components/ChatWidget'
 
 const siteUrl = 'https://fastwebsites.agency'
 
@@ -76,7 +75,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         {children}
-        <ChatWidget />
       </body>
     </html>
   )

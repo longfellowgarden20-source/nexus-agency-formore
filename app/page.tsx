@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 import { HeroSection } from './components/HeroSection'
 import { ClientLogoConveyor } from './components/ClientLogoConveyor'
 import { Footer } from './components/Footer'
+import ChatWidget from './components/ChatWidget'
 
 export default function Home() {
   return (
@@ -139,6 +140,7 @@ export default function Home() {
       </section>
 
       <Footer />
+      <ChatWidget />
     </main>
   )
 }
