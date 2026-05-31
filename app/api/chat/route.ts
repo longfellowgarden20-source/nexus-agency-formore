@@ -62,32 +62,32 @@ export async function POST(req: NextRequest) {
     if (client) systemPrompt = buildSystemPrompt(client)
   }
 
-  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'llama-3.1-8b-instant',
-      max_tokens: 200,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages.map((m: Message) => ({ role: m.role, content: m.content })),
-      ],
-    }),
-  })
-
-  const text = await res.text()
-  if (!res.ok) return NextResponse.json({ error: `Groq error: ${text}` }, { status: 500 })
-
-  let data: { choices?: { message?: { content?: string } }[] }
-  try { data = JSON.parse(text) } catch {
-    return NextResponse.json({ error: 'Invalid response from Groq' }, { status: 500 })
+  const groqKeys = [process.env.GROQ_API_KEY, process.env.GROQ_API_KEY_2, process.env.GROQ_API_KEY_3].filter(Boolean) as string[]
+  let reply = ''
+  for (const key of groqKeys) {
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+        body: JSON.stringify({
+          model: 'llama-3.1-8b-instant',
+          max_tokens: 200,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            ...messages.map((m: Message) => ({ role: m.role, content: m.content })),
+          ],
+        }),
+      })
+      const text = await res.text()
+      let data: { choices?: { message?: { content?: string } }[]; error?: { code?: string } }
+      try { data = JSON.parse(text) } catch { continue }
+      if (data?.error?.code === 'rate_limit_exceeded') continue
+      const content = data.choices?.[0]?.message?.content?.trim()
+      if (content) { reply = content; break }
+    } catch { continue }
   }
 
-  const reply = data.choices?.[0]?.message?.content?.trim()
-  if (!reply) return NextResponse.json({ error: 'Empty response' }, { status: 500 })
+  if (!reply) return NextResponse.json({ error: 'All Groq keys rate limited or failed' }, { status: 500 })
 
   // Log conversation if clientId provided
   if (clientId && messages.length > 0) {
