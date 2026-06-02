@@ -23,7 +23,7 @@ export default function ClaimButton({
   }, [open])
 
   const phoneDigits = agencyPhone.replace(/\D/g, '')
-  const emailHref = `mailto:${agencyEmail}?subject=I want this website for ${businessName}&body=Hi, I just viewed my website preview and I'm interested in getting started.`
+  const emailHref = `mailto:${agencyEmail}?subject=Website for ${businessName}&body=Hi, I just saw the website you built for ${businessName} and I'm interested in getting started.`
 
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
@@ -31,7 +31,7 @@ export default function ClaimButton({
         onClick={() => setOpen(o => !o)}
         className="demo-banner-cta"
       >
-        Claim This Site →
+        Get This Website →
       </button>
 
       {open && (
