@@ -432,7 +432,7 @@ export default async function PreviewPage({
           .contact-info-value:hover { color: ${c.accentDark}; }
           .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
           .form-label { font-size: 13px; font-weight: 600; color: #374151; }
-          .form-input { padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 14px; color: #0f172a; outline: none; transition: border-color 0.15s; width: 100%; font-family: inherit; background: #fff; }
+          .form-input { padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; color: #0f172a; outline: none; transition: border-color 0.15s; width: 100%; font-family: inherit; background: #fff; }
           .form-input:focus { border-color: ${c.accent}; }
           textarea.form-input { min-height: 100px; resize: vertical; }
           .form-submit { width: 100%; padding: 14px; background: ${c.accent}; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
