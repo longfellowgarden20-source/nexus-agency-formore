@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { transporter } from '@/lib/mailer'
 
+export const runtime = 'edge'
+
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 
+export const runtime = 'edge'
+
 export const dynamic = 'force-dynamic'
 
 const DEFAULT_SYSTEM_PROMPT = `You are a helpful assistant for Fast Websites, a web design agency based in the US. Your job is to help visitors understand what we do, answer their questions, and capture their contact info if they're interested.

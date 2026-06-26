@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import bcrypt from 'bcryptjs'
 
+export const runtime = 'edge'
+
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
